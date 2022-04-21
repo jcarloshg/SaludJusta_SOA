@@ -2,34 +2,52 @@ DROP DATABASE IF EXISTS SaludJustaDB;
 
 CREATE DATABASE IF NOT EXISTS SaludJustaDB;
 
+
+# ROLES
+# client -> CLIENT
+# receptionist -> RECEPTIONIST
+# labTechnician -> LAB_TECHNICIAN
+
+# GENDER
+# male -> MALE
+# famale -> FAMAL
+
+# STATUS
+# EN ESPERA
+# FINALIZADA
+# NO ASIGNADA
+# EN CURSO
+
 use SaludJustaDB;
 
 CREATE TABLE ExamCatalog
 (
-	id int auto_increment primary key not null,
+	idExamCatalog int auto_increment primary key not null,
     typeExam varchar(45) not null,
     cost float not null
 );
 
 CREATE TABLE Appointment
 (
-	id int auto_increment primary key not null,
-    dateTimeA DATETIME NOT NULL,
-    status varchar(10) NOT NULL,
-    FK_Exam INT NOT NULL,
-    FK_UserClient INT NOT NULL
+	idAppointment int auto_increment primary key not null,
+    date DATE NOT NULL,
+    time TIME NOT NULL,
+    status varchar(20) NOT NULL,
+    FK_Exam INT,
+    FK_ExamCatalog INT NOT NULL,
+    FK_UserClient INT
 );
 
 CREATE TABLE Exam
 (
-	id int auto_increment primary key not null,
-    results VARCHAR(45) not null,
+	idExam int auto_increment primary key not null,
+    results VARCHAR(45),
     FK_ExamCatalog int not null
 );
 
 CREATE TABLE User
 (
-	id int auto_increment primary key not null,
+	idUser int auto_increment primary key not null,
     name VARCHAR(45) NOT NULL,
     lastName VARCHAR(45) NOT NULL,
     phoneNumber VARCHAR(10) NOT NULL,
@@ -42,13 +60,16 @@ CREATE TABLE User
 
 
 # add [FOREIGN KEY][ExamCatalog] into table [Exam] -> an [Exam] is an [ExamCatalog]
-ALTER TABLE Exam ADD FOREIGN KEY (FK_ExamCatalog) REFERENCES ExamCatalog(id);
+ALTER TABLE Exam ADD FOREIGN KEY (FK_ExamCatalog) REFERENCES ExamCatalog(idExamCatalog);
 
 # add [FOREIGN KEY][Exam] into table [Appointment] -> an [Appointment] have an [Exam]
-ALTER TABLE Appointment ADD FOREIGN KEY (FK_Exam) REFERENCES Exam(id);
+ALTER TABLE Appointment ADD FOREIGN KEY (FK_Exam) REFERENCES Exam(idExam);
+
+# add [FOREIGN KEY][Exam] into table [Appointment] -> [APPOINTMENTS] BELONG TO ONE EXAM TYPE FROM [ExamCatalog]
+ALTER TABLE Appointment ADD FOREIGN KEY (FK_ExamCatalog) REFERENCES ExamCatalog(idExamCatalog);
 
 # add [FOREIGN KEY][Exam] into table [Appointment] -> an [Appointment] have an [Exam]
-ALTER TABLE Appointment ADD FOREIGN KEY (FK_UserClient) REFERENCES User(id);
+ALTER TABLE Appointment ADD FOREIGN KEY (FK_UserClient) REFERENCES User(idUser);
 
 show tables;
 
@@ -56,6 +77,14 @@ show tables;
 # ==========================================================================================
 # INSERTS TO PrOOFS
 # ==========================================================================================
+
+
+INSERT INTO ExamCatalog (typeExam, cost) values ('AUDIOMETRÍA', 350.50);
+INSERT INTO ExamCatalog (typeExam, cost) values ('MASTOGRAFÍA', 100.50);
+INSERT INTO ExamCatalog (typeExam, cost) values ('ESPIROMETRÍA', 558.50);
+INSERT INTO ExamCatalog (typeExam, cost) values ('PERFIL TRIODE', 100.50);
+INSERT INTO ExamCatalog (typeExam, cost) values ('BIOMETRÍA HEMÁTICA', 920.00);
+
 
 INSERT INTO User (name, lastName, phoneNumber, gender, email, password , role)
 values
@@ -67,6 +96,47 @@ values
 	('Alejando', 'Buena Cara', '521234567890', 'MALE', 'alejando@email.com', 'alejandro123', 'LAB_TECHNICIAN' )
 ;
 
+INSERT INTO
+  Appointment (date,time,status, FK_ExamCatalog)
+values
+  ('2022-04-21', '07:00:00', "NO ASIGNADA", 1),
+  ('2022-04-21', '07:30:00', "NO ASIGNADA", 1),
+  ('2022-04-21', '08:00:00', "NO ASIGNADA", 1),
+  ('2022-04-21', '08:30:00', "NO ASIGNADA", 1),
+  ('2022-04-21', '09:00:00', "NO ASIGNADA", 1),
+  ('2022-04-21', '09:30:00', "NO ASIGNADA", 1),
+  #############
+  ('2022-04-21', '07:00:00', "NO ASIGNADA", 2),
+  ('2022-04-21', '08:00:00', "NO ASIGNADA", 2),
+  ('2022-04-21', '09:00:00', "NO ASIGNADA", 2),
+  ('2022-04-21', '10:00:00', "NO ASIGNADA", 2),
+  ('2022-04-21', '11:00:00', "NO ASIGNADA", 2),
+  ('2022-04-21', '12:00:00', "NO ASIGNADA", 2),
+  #############
+  ('2022-04-21', '12:00:00', "NO ASIGNADA", 3),
+  ('2022-04-21', '12:30:00', "NO ASIGNADA", 3),
+  ('2022-04-21', '13:00:00', "NO ASIGNADA", 3),
+  ('2022-04-21', '13:30:00', "NO ASIGNADA", 3),
+  ('2022-04-21', '14:00:00', "NO ASIGNADA", 3),
+  ('2022-04-21', '14:30:00', "NO ASIGNADA", 3),
+  #############
+  ('2022-04-21', '12:00:00', "NO ASIGNADA", 4),
+  ('2022-04-21', '13:00:00', "NO ASIGNADA", 4),
+  ('2022-04-21', '14:00:00', "NO ASIGNADA", 4),
+  ('2022-04-21', '15:00:00', "NO ASIGNADA", 4),
+  ('2022-04-21', '16:00:00', "NO ASIGNADA", 4),
+  ('2022-04-21', '17:00:00', "NO ASIGNADA", 4),
+  #############
+  ('2022-04-21', '07:00:00', "NO ASIGNADA", 5),
+  ('2022-04-21', '08:00:00', "NO ASIGNADA", 5),
+  ('2022-04-21', '08:00:00', "NO ASIGNADA", 5),
+  ('2022-04-21', '09:00:00', "NO ASIGNADA", 5),
+  ('2022-04-21', '10:00:00', "NO ASIGNADA", 5),
+  ('2022-04-21', '11:00:00', "NO ASIGNADA", 5)
+  ;
+
+
+use SaludJustaDB;
 SELECT * FROM User;
-
-
+SELECT * FROM ExamCatalog;
+SELECT * FROM Appointment;
