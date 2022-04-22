@@ -135,8 +135,23 @@ values
   ('2022-04-21', '11:00:00', "NO ASIGNADA", 5)
   ;
 
+## CREATE EXAMS
+INSERT INTO Exam (FK_ExamCatalog) VALUES (1);
+INSERT INTO Exam (FK_ExamCatalog) VALUES (1);
+INSERT INTO Exam (FK_ExamCatalog) VALUES (1);
+INSERT INTO Exam (FK_ExamCatalog) VALUES (1);
+INSERT INTO Exam (FK_ExamCatalog) VALUES (1);
+
+## INSERT IDEXAMS, IDCLIENT AND CHANGE STATUS TO EACH APPOINTMENT
+UPDATE Appointment SET FK_UserClient=1, FK_Exam=1,status = "EN ESPERA" WHERE idAppointment = 1;
+UPDATE Appointment SET FK_UserClient=1, FK_Exam=2,status = "EN ESPERA" WHERE idAppointment = 2;
+UPDATE Appointment SET FK_UserClient=1, FK_Exam=3,status = "EN ESPERA" WHERE idAppointment = 3;
+UPDATE Appointment SET FK_UserClient=1, FK_Exam=4,status = "EN ESPERA" WHERE idAppointment = 4;
+UPDATE Appointment SET FK_UserClient=1, FK_Exam=5,status = "EN ESPERA" WHERE idAppointment = 5;
+
 
 use SaludJustaDB;
 SELECT * FROM User;
 SELECT * FROM ExamCatalog;
+SELECT * FROM Exam;
 SELECT * FROM Appointment;
