@@ -143,11 +143,11 @@ INSERT INTO Exam (FK_ExamCatalog) VALUES (1);
 INSERT INTO Exam (FK_ExamCatalog) VALUES (1);
 
 ## INSERT IDEXAMS, IDCLIENT AND CHANGE STATUS TO EACH APPOINTMENT
-UPDATE Appointment SET FK_UserClient=1, FK_Exam=1,status = "EN ESPERA" WHERE idAppointment = 1;
-UPDATE Appointment SET FK_UserClient=1, FK_Exam=2,status = "EN ESPERA" WHERE idAppointment = 2;
-UPDATE Appointment SET FK_UserClient=1, FK_Exam=3,status = "EN ESPERA" WHERE idAppointment = 3;
-UPDATE Appointment SET FK_UserClient=1, FK_Exam=4,status = "EN ESPERA" WHERE idAppointment = 4;
-UPDATE Appointment SET FK_UserClient=1, FK_Exam=5,status = "EN ESPERA" WHERE idAppointment = 5;
+UPDATE Appointment SET FK_UserClient=1, FK_Exam=1,status = "EN CURSO" WHERE idAppointment = 1;
+UPDATE Appointment SET FK_UserClient=1, FK_Exam=2,status = "EN CURSO" WHERE idAppointment = 2;
+UPDATE Appointment SET FK_UserClient=1, FK_Exam=3,status = "EN CURSO" WHERE idAppointment = 3;
+UPDATE Appointment SET FK_UserClient=1, FK_Exam=4,status = "EN CURSO" WHERE idAppointment = 4;
+UPDATE Appointment SET FK_UserClient=1, FK_Exam=5,status = "EN CURSO" WHERE idAppointment = 5;
 
 
 use SaludJustaDB;
@@ -155,3 +155,14 @@ SELECT * FROM User;
 SELECT * FROM ExamCatalog;
 SELECT * FROM Exam;
 SELECT * FROM Appointment;
+
+SELECT * FROM Exam 
+INNER JOIN ExamCatalog ON Exam.FK_ExamCatalog = ExamCatalog.idExamCatalog
+INNER JOIN Appointment ON Appointment.FK_Exam = Exam.idExam
+INNER JOIN User ON User.idUser = Appointment.FK_UserClient 
+WHERE status = 'EN CURSO' AND date = '2022-04-21'
+ORDER BY time ASC;
+
+SELECT * FROM Exam INNER JOIN Appointment ON Appointment.FK_Exam = Exam.idExam WHERE status = 'EN ESPERA' AND date = '2022-04-21'ORDER BY time ASC;
+
+
