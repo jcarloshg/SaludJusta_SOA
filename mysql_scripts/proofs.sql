@@ -21,3 +21,8 @@ UPDATE Appointment SET status = "EN CURSO" WHERE idAppointment =1;
 SELECT * from Appointment;
 
 UPDATE Appointment SET FK_Exam = 1, FK_UserClient = 1, status = "EN ESPERA" WHERE idAppointment = 1;
+
+
+use SaludJustaDB;
+SELECT * FROM Exam INNER JOIN ExamCatalog ON Exam.FK_ExamCatalog = ExamCatalog.idExamCatalog WHERE idExam= 3;
+UPDATE Exam SET results="RESRULTADOS DE PRUEBA" WHERE idExam= 3;
