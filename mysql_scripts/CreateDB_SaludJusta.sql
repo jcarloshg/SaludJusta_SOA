@@ -172,14 +172,13 @@ SELECT * FROM Exam INNER JOIN Appointment ON Appointment.FK_Exam = Exam.idExam W
 SELECT * FROM Appointment WHERE status = "EN ESPERA" AND date ='2022-04-21';
 
 SELECT * FROM Appointment 
-INNER JOIN Exam ON Appointment.FK_Exam = Exam.idExamb
+INNER JOIN Exam ON Appointment.FK_Exam = Exam.idExam
 INNER JOIN ExamCatalog ON Exam.FK_ExamCatalog = ExamCatalog.idExamCatalog
 INNER JOIN User ON User.idUser = Appointment.FK_UserClient 
-WHERE status = 'EN ESPERA' AND date = '2022-04-21'
-ORDER BY time ASC;
+WHERE name = "Jose Carlos"
+ORDER BY date ASC , time ASC;
 
 SELECT * FROM Appointment 
 INNER JOIN ExamCatalog ON ExamCatalog.idExamCatalog = Appointment.FK_ExamCatalog 
 WHERE typeExam = 'AUDIOMETRÍA' AND date = '2022-04-21' AND status = 'NO ASIGNADA';
-
 
